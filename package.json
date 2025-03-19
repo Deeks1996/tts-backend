@@ -1,15 +1,15 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "/api/index.js",
+  "main": "api/index.js",
   "engines": {
   "node": "18.x"
 },
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node /api/index.js",
-    "start": "node /api/index.js"
+    "dev": "node api/index.js",
+    "start": "node api/index.js"
   },
   "keywords": [],
   "author": "",
