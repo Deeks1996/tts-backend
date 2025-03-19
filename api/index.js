@@ -14,6 +14,8 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/tts", ttsRoutes);
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.get("/", (req, res) => {
+  res.send("Welcome to the TTS API!");
+});
 
 export default app;
