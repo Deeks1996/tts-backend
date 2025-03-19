@@ -1,11 +1,11 @@
 import express from "express";
 import multer from "multer";
-import fs from "fs";
 import axios from "axios";
 import supabase from "../config/supabaseClient.js";
 import dotenv from 'dotenv';
+
 const router = express.Router();
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage: multer.memoryStorage() });
 
 dotenv.config();
 
@@ -28,9 +28,7 @@ router.post("/convert", verifyToken, upload.single("file"), async (req, res) => 
     let inputText = text;
 
     if (req.file) {
-        const filePath = req.file.path;
-        inputText = fs.readFileSync(filePath, "utf-8");
-        fs.unlinkSync(filePath);
+        inputText = req.file.buffer.toString("utf-8");
     }
 
     if (!inputText || inputText.length > 2000) {
@@ -49,15 +47,13 @@ router.post("/convert", verifyToken, upload.single("file"), async (req, res) => 
         );
 
         const audioBuffer = Buffer.from(response.data);
-        const audioBlob = new Blob([audioBuffer], { type: "audio/mpeg" });
-        const audioPath = `ttsaudio-/${Date.now()}.mp3`;
+        const audioPath = `tts_audio/${Date.now()}.mp3`;
         
-        const { data, error: uploadError } = await supabase.storage.from("ttsaudio").upload(audioPath, audioBlob, {
+        const { data, error: uploadError } = await supabase.storage.from("ttsaudio").upload(audioPath, audioBuffer, {
             contentType: "audio/mpeg"
         });
 
         if (uploadError) {
-            console.error("Upload error:", uploadError);
             return res.status(500).json({ error: uploadError.message });
         }
         
