@@ -27,6 +27,8 @@ router.post("/convert", verifyToken, upload.single("file"), async (req, res) => 
     const userId = req.user.id;
     let inputText = text;
 
+    console.log("Uploaded file", req.file);
+    
     if (req.file) {
         inputText = req.file.buffer.toString("utf-8");
     }
