@@ -2,7 +2,7 @@ import express from "express";
 import multer from "multer";
 import fs from "fs";
 import axios from "axios";
-import supabase from "../../api/config/supabaseClient.js";
+import supabase from "../config/supabaseClient.js";
 import dotenv from 'dotenv';
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
