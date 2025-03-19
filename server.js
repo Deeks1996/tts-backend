@@ -16,3 +16,5 @@ app.use("/auth", authRoutes);
 app.use("/tts", ttsRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+export default app;
